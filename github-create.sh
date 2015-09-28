@@ -1,8 +1,12 @@
 ## Code used to create a local and remote git(hub) repo
 ## modified from
 ## https://viget.com/extend/create-a-github-repo-from-the-command-line
-## To use, add this file to <PATH> and add the following line to startup files
-## . <PATH>/github-create.sh
+## To use,
+## 1. add this file to <PATH>
+## 2. add the following line to startup files: . <PATH>/github-create.sh
+## 3. source startup files
+## 4. cd to the directory you'd like to create a git folder and type
+##    github-create <foldername>
 
 github-creat() {
 
