@@ -1,0 +1,217 @@
+
+{% extends "templates/base.html" %}
+{% block content %}
+
+<div class="container">
+    
+    <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+    <script src="/static/underscore.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.1.1/tinycolor.js"></script>
+
+    <!-- <script type="text/x-mathjax-config"> -->
+    <!--   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}}); -->
+    <!-- </script> -->
+    <!-- <script type="text/javascript" async -->
+    <!-- 	    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"> -->
+    <!-- </script> -->
+
+  <script src="web/vis.js"></script>
+  <script>
+    main();
+  </script>
+    
+</div>
+
+<!-- Title -->
+<div class="container">
+
+  <h1>MP: Are country songs more boring than Pop songs?</h1>
+  <h2>We analyzed 17 artists from two catagories and tell you the answer...</h2>
+</div>
+
+
+<!-- D3 plot -->
+<div class="container" id="content">
+</div>
+<!-- <button id="RescaleX">rescal X-axis</button> -->
+<!-- Documentation -->
+<div class="container">
+
+  <p>
+    This graph visualizes the complexity or boringness of a song in comparison to how pop or how country the song is through the analysis of lyrics. Note that these songs have been classified upon release as pop or country by the artist or label, but this graph aims to measure how country or pop a song is based on its lyrics. The dots on the graph represent the pop genre while the squares represent the country genre. The colors represent different artists.
+    
+  </p>
+  
+  <h2>What's the X-axis? - Country v.s. Pop</h2>
+  <!-- <h3><li>Predicting the genre by a text classifier - Naive Bayes Classifier</li></h3> -->
+  <!-- <h3><li>Rescaling the X-axis for better visualization</li></h3> -->
+  <p>We wanted to classify songs into two catagories - Coutry and Pop. A song which is more like "typical" Country songs has larger x value while a song which is more like "typical" Pop songs has lower x value. But what does it mean by "typical"? We needed to extract some "features" from each song so we can gather those features and figured out what pattern of features dominant in Country and Pop songs. We only had text in hands. The simplest feature set we can get was the frequency of each word occuring in a song. We used top 500 frequent words in all the songs from both catagories and got all the happening times for these words in each song, as following. </p>
+
+  <center>
+  <table id="t01">    
+    <tr>
+      <th>Song / Word</th>
+      <th>love</th>
+      <th>night</th>
+      <th>leave</th>
+      <th>la</th>
+      <th>heart</th>
+      <th>home</th>
+    </tr>
+    <tr>
+      <td>song A</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>song B</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>3</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>song C</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+    </tr>
+  </table>
+  </center>
+  </br>
+    
+  <script src="https://gist.github.com/shchao53/2b6a48641dbe2e3e8aab.js"></script>
+
+  <p>Since we knew the real genre for each song, it's now a supervised learning problem. We built a machine learning mode called <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes Classifier</a>, which is commonly used for text classification. The model learned what is a "typical Pop" or a "Typical Country" based on all the 317 songs we have and their 500 feature values. The we used the trained classifier to predict the type of each song based on their feature values. A value close to 1 means more Country-like and vice versa. The X-axis is rescaled for a better visualization.</p>
+
+  <script src="https://gist.github.com/shchao53/c8ed378629cc1b50ecbb.js"></script>
+  
+  <h2>What's the Y-axis? - Complex v.s. Boring</h2>
+
+  <p>We calculated Y value using <a href="http://www.researchgate.net/publication/2550879_Entropy_Text_Analyzer">Text Entropy</a>, a measure indicating how complex a text is. </p>
+  <center><img src="http://latex.codecogs.com/svg.latex?E_T(p_1,...,p_n) = (\frac{1}{\lambda}\sum\limits_{i=1}^np_i[\log_{10}(\lambda) - \log_{10}(p_i)]) \times \frac{1}{E_{max}}" border="0"/></center>
+  <p>where <img src="http://latex.codecogs.com/svg.latex?\lambda" border="0"/></center> is the total number of words, <img src="http://latex.codecogs.com/svg.latex?n" border="0"/></center> is the number of unique words, and <img src="http://latex.codecogs.com/svg.latex?p_i" border="0"/></center> is the number of times that the i-word found.</br></br></p>
+
+<script src="https://gist.github.com/shchao53/a59297b3861c562a6ae8.js"></script>
+
+<p>
+  The results is normalize by the maximum entropy one can possibly get for the same length of text, i.e. every word is different in the text. Without the normalization, a text with longer length would have a larger entropy.  
+</p>
+
+  <h2>The answer is... No!</h2>
+
+  <hr>
+</div>
+
+
+
+<style>
+  p {
+  font-size: 18px;
+  }
+
+  table {
+  width:80%;
+  
+  }
+  table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  
+  }
+  th, td {
+  padding: 5px;
+  text-align: left;
+  
+  }
+  table#t01 tr:nth-child(even) {
+  background-color: #eee;
+  
+  }
+  table#t01 tr:nth-child(odd) {
+  background-color:#fff;
+  
+  }
+  table#t01 th{
+  background-color: grey;
+  color: white;
+  
+  }
+  
+  .axis path,
+  .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+  }
+
+  
+  .axis text {
+  font-family: sans-serif;
+  font-size: 18px;
+  }
+  .node {
+  text-color: black;
+  stroke-width: 1.5px;
+  }
+
+  .link {
+  stroke: black;
+  fill: transparent;
+  }
+
+
+  .dot {
+  stroke: #FF0000;
+  }
+
+  .rect {
+  stroke: #0000FF;
+  }
+
+  .dot.hover {
+  stroke: #FF0000;
+  stroke-width: 4px;
+  }
+
+  .rect.hover {
+  stroke: #0000FF;
+  stroke-width: 4px;
+  }
+
+  .tooltip {
+  position: absolute;
+  width: 500px;
+  height: 10px;
+  pointer-events: none;
+  font-size: 15px;
+
+  }
+
+  .legend {
+  fill: black;
+  font-size: 14px;
+  }
+  .legend.hover {
+  fill: Orange;
+  stroke: Orange;
+  font-size: 18px;
+  
+  }
+  
+  
+</style>
+
+
+
+{% endblock %}
