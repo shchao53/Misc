@@ -1,5 +1,5 @@
 # NLP on country and pop songs
 
-Under construction
+Under construction..
 
-![Image](http://image.shutterstock.com/z/stock-photo-helmet-for-builder-worker-traffic-cones-under-construction-sign-icon-isolated-on-white-106063214.jpg){:height="36px"}
+![Image](https://d30y9cdsu7xlg0.cloudfront.net/png/2029-200.png)
