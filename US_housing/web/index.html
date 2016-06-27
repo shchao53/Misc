@@ -1,0 +1,97 @@
+{% extends "templates/base.html" %}
+{% block content %}
+
+<div class="container">
+  <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+  <script src="/static/underscore.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="http://thematicmapping.org/playground/d3/d3.slider/d3.slider.js"></script>
+  <script src="web/vis.js"></script>
+  <script type="text/javascript">
+    var counter = 0;
+  </script>
+  <script>
+    main(counter);
+  </script>
+  <button onclick="myFunction()">Next Year</button>
+  <!-- <p id="demo" onclick="myFunction()">Next year</p> -->
+  <script>
+    function myFunction() {
+    counter++;
+
+    }
+  </script>
+</div>
+
+<div class="container">
+  <h1>US Housing Prices</h1>
+  <h3>Data source: <a href="http://www.zillow.com/research/data/#median-home-value">Zillow data</a></h3>
+  <h3>Map tool: <a href="https://github.com/mbostock/topojson">topojson</a> by <a href="http://bost.ocks.org/mike/">Mike Bostock</a></h3>
+</div>
+
+
+<!-- <h2>Slider with slide event: <span id="slidertext">0</span></h2> -->
+<!-- <div id="slider"></div> -->
+
+<!-- D3 plot -->
+<div class="container" id="content">
+</div>
+
+<style>
+  
+  .land {
+  fill: #ddd;
+  
+  }
+
+  .border {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  
+  }
+
+  .bubble {
+  fill: brown;
+  fill-opacity: .5;
+  stroke: #fff;
+  stroke-width: .5px;
+  
+  }
+
+  .bubble :hover {
+  stroke: #000;
+  
+  }
+
+  .legend circle {
+  fill: none;
+  stroke: #ccc;
+  
+  }
+
+  .legend text {
+  fill: #777;
+  font: 10px sans-serif;
+  text-anchor: middle;
+  
+  }
+  
+
+  .tooltip {
+  position: absolute;
+  pointer-events: none;
+  font-size: 15px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 4px;
+  line-height: 1.2;
+  color: white;
+  }
+  
+  
+</style>
+
+{% endblock %}

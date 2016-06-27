@@ -1,0 +1,53 @@
+function main() {
+
+
+    d3.json("res/us.json", function(error, us) {
+	if (error) return console.error(error);
+
+	var margin = { top: 50,
+		       left: 50,
+		       right: 50,
+		       bottom: 50 };
+
+	var realW = document.getElementById("content").offsetWidth;
+
+	var width = realW - margin.left - margin.right,
+	    height = realW - 200 - margin.top - margin.bottom;
+
+	var Pw = width - 200,
+	    Ph = height;
+	
+	/* #1: Create the SVG */
+	var svg = d3.select("#content")
+	    .append("svg")
+	    .attr("w", width + margin.left + margin.right)
+	    .attr("h", height + margin.top + margin.bottom)
+	    .style("width", (width + margin.left + margin.right) + "px")
+	    .style("height", (height + margin.top + margin.bottom) + "px")
+	    .append("g")
+	    .attr("transform", "translate(" + margin.left + ", " + margin.top + ")")
+	;
+
+	var path = d3.geo.path()
+	    .projection(null);
+
+	
+	// svg.append("path")
+	//     .datum(topojson.mesh(us))
+	//     .attr("d", path);
+	
+	svg.append("path")
+	    .datum(topojson.feature(us, us.objects.nation))
+	    .attr("class", "land")
+	    .attr("d", path);
+
+	svg.append("path")
+	    .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+	    .attr("class", "border border--state")
+	    .attr("d", path);
+    });
+	    
+		
+
+
+}
