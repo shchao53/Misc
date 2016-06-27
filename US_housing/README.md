@@ -1,4 +1,4 @@
-# Evolution of housing prices and rents in the United States
+# Evolution of housing prices in the United States
 
 Under construction..
 
