@@ -1,2 +1,2 @@
 # Misc
-Collecting miscellaneous codes, thoughts and projects.
+Collecting miscellaneous codes, thoughts, and projects.
